@@ -1,0 +1,594 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Календарь ухода за кожей | Весна/Лето</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6a5acd;
+            --secondary-color: #9370db;
+            --accent-color: #ff69b4;
+            --light-color: #f8f7ff;
+            --dark-color: #33334d;
+            --text-color: #444466;
+            --gradient: linear-gradient(135deg, #6a5acd 0%, #9370db 50%, #ff69b4 100%);
+            --gradient-light: linear-gradient(135deg, rgba(106, 90, 205, 0.1) 0%, rgba(147, 112, 219, 0.1) 50%, rgba(255, 105, 180, 0.1) 100%);
+            --card-shadow: 0 10px 30px rgba(106, 90, 205, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f9f9ff;
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 50px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Заголовок с градиентом и прозрачностью */
+        .header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .title {
+            font-size: 3.2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .season-badge {
+            display: inline-block;
+            background: var(--gradient);
+            color: white;
+            padding: 8px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(106, 90, 205, 0.3);
+            margin-bottom: 40px;
+        }
+
+        /* Карточки навыков */
+        .skills-section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--gradient);
+            display: inline-block;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .skill-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(106, 90, 205, 0.1);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(106, 90, 205, 0.2);
+        }
+
+        .skill-card i {
+            font-size: 2.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .skill-card h3 {
+            font-size: 1.4rem;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+
+        /* Календарь */
+        .calendar-section {
+            margin-bottom: 50px;
+        }
+
+        .calendar-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            background: white;
+            margin-bottom: 30px;
+        }
+
+        .calendar-table th {
+            background: var(--gradient);
+            color: white;
+            padding: 18px 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .calendar-table td {
+            padding: 18px 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(106, 90, 205, 0.1);
+        }
+
+        .calendar-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .calendar-table tr:nth-child(even) {
+            background-color: rgba(106, 90, 205, 0.03);
+        }
+
+        .calendar-table tr:hover {
+            background-color: rgba(106, 90, 205, 0.05);
+        }
+
+        .day-cell {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        /* Блоки ухода */
+        .care-section {
+            margin-bottom: 50px;
+        }
+
+        .care-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .care-block {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .care-block h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .care-item {
+            padding: 10px 0;
+            border-bottom: 1px dashed rgba(106, 90, 205, 0.1);
+        }
+
+        .care-item:last-child {
+            border-bottom: none;
+        }
+
+        .care-item strong {
+            color: var(--secondary-color);
+        }
+
+        /* Чек-лист */
+        .checklist-section {
+            background: var(--gradient-light);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 50px;
+        }
+
+        .checklist-title {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        .checklist {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .checklist-item {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .checklist-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 20px rgba(106, 90, 205, 0.1);
+        }
+
+        .checklist-item input {
+            margin-right: 15px;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--accent-color);
+        }
+
+        /* Сетка инструментов */
+        .tools-section {
+            margin-bottom: 50px;
+        }
+
+        .tools-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .tool-tag {
+            background: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            font-weight: 600;
+            color: var(--text-color);
+            border: 2px solid transparent;
+            transition: var(--transition);
+            cursor: default;
+        }
+
+        .tool-tag:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .tool-tag.accent {
+            background: var(--gradient);
+            color: white;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .calendar-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .calendar-table th, 
+            .calendar-table td {
+                padding: 12px 8px;
+                font-size: 0.9rem;
+            }
+            
+            .care-grid,
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .checklist {
+                grid-template-columns: 1fr;
+            }
+            
+            .checklist-section {
+                padding: 25px;
+            }
+            
+            .header {
+                padding: 40px 20px 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .season-badge {
+                font-size: 0.9rem;
+                padding: 6px 20px;
+            }
+            
+            .tool-tag {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .care-block {
+                padding: 20px;
+            }
+        }
+
+        /* Дополнительные стили */
+        .note {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .note strong {
+            color: var(--primary-color);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        .highlight {
+            background-color: rgba(255, 105, 180, 0.1);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">Календарь ухода за кожей</h1>
+            <p class="subtitle">Профессиональная система для здоровой и ухоженной кожи</p>
+            <div class="season-badge">
+                <i class="fas fa-seedling"></i> Весенне-летний сезон <i class="fas fa-sun"></i>
+            </div>
+        </header>
+
+        <section class="skills-section">
+            <h2 class="section-title">Ключевые принципы ухода</h2>
+            <div class="skills-container">
+                <div class="skill-card">
+                    <i class="fas fa-sun"></i>
+                    <h3>Защита от солнца</h3>
+                    <p>SPF — обязательный шаг в утреннем уходе для предотвращения фотостарения и гиперпигментации.</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-recycle"></i>
+                    <h3>Циклирование активов</h3>
+                    <p>Чередование ретинола, витамина C и бакучиола для эффективного и безопасного ухода.</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-spa"></i>
+                    <h3>Восстановление кожи</h3>
+                    <p>Дни восстановления для поддержания здорового барьера кожи и предотвращения раздражений.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="calendar-section">
+            <h2 class="section-title">Еженедельный календарь ухода — лицо</h2>
+            <table class="calendar-table">
+                <thead>
+                    <tr>
+                        <th>День</th>
+                        <th>Утро</th>
+                        <th>Вечер</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="day-cell">Понедельник</td>
+                        <td>Очищение → Тонер → <span class="highlight">VT PDRN</span> → <span class="highlight">Vitamin C</span> → Лёгкий крем → <span class="highlight">SPF</span></td>
+                        <td>Очищение → Тонер → <span class="highlight">VT PDRN</span> → <span class="highlight">Retinal</span> → Крем</td>
+                    </tr>
+                    <tr>
+                        <td class="day-cell">Вторник</td>
+                        <td>Очищение → Тонер → <span class="highlight">VT PDRN</span> → Крем → <span class="highlight">SPF</span></td>
+                        <td>Очищение → Тонер → <span class="highlight">VT PDRN</span> → <span class="highlight">Восстановление</span> → Крем</td>
+                    </tr>
+                    <tr>
+                        <td class="day-cell">Среда</td>
+                        <td>Очищение → Тонер → <span class="highlight">VT PDRN</span> → <span class="highlight">Vitamin C</span> → Крем → <span class="highlight">SPF</span></td>
+                        <td>Очищение → Тонер → <span class="highlight">VT PDRN</span> → <span class="highlight">Bakuchiol</span> → Крем</td>
+                    </tr>
+                    <tr>
+                        <td class="day-cell">Четверг</td>
+                        <td>Очищение → Тонер → <span class="highlight">VT PDRN</span> → Крем → <span class="highlight">SPF</span></td>
+                        <td>Очищение → Тонер → <span class="highlight">VT PDRN</span> → <span class="highlight">Восстановление</span> → Крем</td>
+                    </tr>
+                    <tr>
+                        <td class="day-cell">Пятница</td>
+                        <td>Очищение → Тонер → <span class="highlight">VT PDRN</span> → <span class="highlight">Vitamin C</span> → Крем → <span class="highlight">SPF</span></td>
+                        <td>Очищение → Тонер → <span class="highlight">VT PDRN</span> → <span class="highlight">Retinal</span> → Крем</td>
+                    </tr>
+                    <tr>
+                        <td class="day-cell">Суббота</td>
+                        <td>Очищение → Тонер → <span class="highlight">VT PDRN</span> → Крем → <span class="highlight">SPF</span></td>
+                        <td>Очищение → Тонер (2 слоя) → <span class="highlight">VT PDRN</span> → <span class="highlight">Маска</span> → Крем</td>
+                    </tr>
+                    <tr>
+                        <td class="day-cell">Воскресенье</td>
+                        <td>Очищение → Тонер → <span class="highlight">VT PDRN</span> → Крем → <span class="highlight">SPF</span></td>
+                        <td><span class="highlight">Минимальный уход:</span> Тонер → <span class="highlight">VT PDRN</span> → Крем</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="care-section">
+            <h2 class="section-title">Уход за зоной глаз и шеей</h2>
+            <div class="care-grid">
+                <div class="care-block">
+                    <h3><i class="fas fa-eye"></i> ГЛАЗА</h3>
+                    <div class="care-item">
+                        <strong>Утро:</strong> Тонер → VT PDRN → Крем для глаз → SPF
+                    </div>
+                    <div class="care-item">
+                        <strong>Вечер:</strong> VT PDRN → Крем для глаз
+                    </div>
+                    <div class="care-item">
+                        <strong>Ретиналь для глаз:</strong> через день вечером, НЕ в дни активного ретиналя для лица
+                    </div>
+                </div>
+                <div class="care-block">
+                    <h3><i class="fas fa-user-circle"></i> ШЕЯ</h3>
+                    <div class="care-item">
+                        <strong>Утро:</strong> Тонер → VT PDRN → Крем → SPF
+                    </div>
+                    <div class="care-item">
+                        <strong>Вечер:</strong>
+                    </div>
+                    <div class="care-item">
+                        • <span class="highlight">Бакучиол</span> — 1–2 раза в неделю
+                    </div>
+                    <div class="care-item">
+                        • <span class="highlight">Ретиналь</span> — 1 раз в неделю
+                    </div>
+                    <div class="care-item">
+                        • Остальные дни — восстановление и крем
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="checklist-section">
+            <h2 class="checklist-title">Чек-лист ухода (для печати)</h2>
+            <div class="checklist">
+                <div class="checklist-item">
+                    <input type="checkbox" id="item1">
+                    <label for="item1">Утреннее очищение</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="item2">
+                    <label for="item2">Тонер</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="item3">
+                    <label for="item3">Актив (Vitamin C / Retinal / Bakuchiol)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="item4">
+                    <label for="item4">Крем</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="item5">
+                    <label for="item5">SPF утром</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="item6">
+                    <label for="item6">Уход за зоной глаз</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="item7">
+                    <label for="item7">Уход за шеей</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="item8">
+                    <label for="item8">Маска 1–2 раза в неделю</label>
+                </div>
+            </div>
+        </section>
+
+        <section class="tools-section">
+            <h2 class="section-title">Ключевые инструменты и компоненты</h2>
+            <div class="tools-grid">
+                <div class="tool-tag accent">VT PDRN</div>
+                <div class="tool-tag">Vitamin C</div>
+                <div class="tool-tag">Retinal</div>
+                <div class="tool-tag">Bakuchiol</div>
+                <div class="tool-tag">SPF защита</div>
+                <div class="tool-tag">Тонер</div>
+                <div class="tool-tag">Очищение</div>
+                <div class="tool-tag">Крем</div>
+                <div class="tool-tag">Восстановление</div>
+                <div class="tool-tag">Маска</div>
+            </div>
+        </section>
+
+        <div class="note">
+            <strong>Примечание:</strong> Данный календарь является примером и может быть адаптирован под индивидуальные особенности вашей кожи. При возникновении раздражения увеличьте количество дней восстановления.
+        </div>
+
+        <footer class="footer">
+            <p>Календарь ухода за кожей | Весенне-летний сезон 2023</p>
+            <p>Регулярный уход — залог здоровой и сияющей кожи</p>
+        </footer>
+    </div>
+
+    <script>
+        // Добавляем интерактивность для чек-листа
+        document.querySelectorAll('.checklist-item input').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const label = this.nextElementSibling;
+                if (this.checked) {
+                    label.style.textDecoration = 'line-through';
+                    label.style.opacity = '0.7';
+                } else {
+                    label.style.textDecoration = 'none';
+                    label.style.opacity = '1';
+                }
+            });
+        });
+
+        // Анимация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.skill-card, .care-block, .checklist-item');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 + index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
